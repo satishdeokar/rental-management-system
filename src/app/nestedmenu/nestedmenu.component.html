@@ -1,0 +1,42 @@
+<mat-form-field class="dropdown" style="color:white">
+    <mat-select #mySelect [(ngModel)]="selectedItem" [disabled]="true" [matMenuTriggerFor]="levelOne"
+        #levelOneTrigger="matMenuTrigger" (click)="levelOneTrigger.openMenu()" placeholder="Select Locations">
+        <mat-option *ngFor="let category of catalogData" [value]="category">{{category}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-menu #levelOne="matMenu" direction="down" yPosition="below" style="color:white">
+    <ng-container *ngFor="let menuItem of catalogData">
+        <span (mouseleave)="levelOneTrigger.closeMenu()"></span>
+        <ng-container>
+            <li mat-menu-item [matMenuTriggerFor]="levelTwo">
+                <span>{{menuItem.name}}</span>
+            </li>
+            <mat-menu #levelTwo="matMenu">
+                <ng-container *ngFor="let child2 of menuItem.branches">
+                    <button mat-menu-item [matMenuTriggerFor]="levelThree" [value]="child2.branch_id"
+                        (click)="onBranchesSelected($event)">
+                        {{child2.name}}
+                    </button>
+                    <mat-menu #levelThree="matMenu">
+                        <ng-container *ngFor="let child3 of child2.categories">
+                            <button mat-menu-item [matMenuTriggerFor]="levelFour" [value]="child3.name"
+                                (click)="onCategorySelected($event)"
+                                [ngClass]="{'selectedMenu': child3.name === selectedItem}">
+                                {{child3.name}}
+                            </button>
+                            <mat-menu #levelFour="matMenu">
+                                <ng-container *ngFor="let child4 of child3.subcategories">
+                                    <button mat-menu-item [value]="child4.name"
+                                        (click)="onSubCategoriesSelected($event)"
+                                        [ngClass]="{'selectedMenu': child4.name === selectedItem}">
+                                        {{child4.name}}
+                                    </button>
+                                </ng-container>
+                            </mat-menu>
+                        </ng-container>
+                    </mat-menu>
+                </ng-container>
+            </mat-menu>
+        </ng-container>
+    </ng-container>
+</mat-menu>

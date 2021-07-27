@@ -1,0 +1,12 @@
+<div class="container mt-4 mx-2 px-2">
+    <section class="darts-dark-theme mx-lg-2 px-lg-2" *ngFor="let item of subCategoryDetails">
+        <mat-card class="example-card text-center">
+            <img mat-card-image src="../../assets/category/subcategory/{{item.image}}" alt="Photo">
+            <mat-card-footer class="bg-primary">
+                <div mat-card-avatar class="mx-2 text-lg-center example-foomat-card-footer-image">
+                    <mat-card-title>{{item.name}}</mat-card-title>
+                </div>
+            </mat-card-footer>
+        </mat-card>
+    </section>
+</div>
